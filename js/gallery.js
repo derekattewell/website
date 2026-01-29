@@ -6,6 +6,7 @@
   // Cloudinary transformations
   const transforms = {
     thumbnail: 'c_fill,w_600,q_auto,f_auto',
+    hero: 'q_auto,f_auto,w_1800',
     full: 'q_auto,f_auto'
   };
 
@@ -13,6 +14,9 @@
   let currentIndex = 0;
 
   // DOM elements
+  const hero = document.getElementById('hero');
+  const heroImg = document.getElementById('hero-img');
+  const enterGalleryBtn = document.getElementById('enter-gallery');
   const gallery = document.getElementById('gallery');
   const lightbox = document.getElementById('lightbox');
   const lightboxImg = document.getElementById('lightbox-img');
@@ -26,10 +30,32 @@
       const response = await fetch('data/images.json');
       const data = await response.json();
       images = data.images;
+      initHero();
       renderGallery();
     } catch (error) {
       console.error('Failed to load images:', error);
     }
+  }
+
+  // Initialize hero with first image
+  function initHero() {
+    if (images.length === 0) return;
+    const firstImage = images[0];
+    heroImg.src = `${CLOUDINARY_BASE}/${transforms.hero}/${firstImage.id}.jpg`;
+    heroImg.alt = `Landscape photograph ${firstImage.number}`;
+    heroImg.onload = () => heroImg.classList.add('loaded');
+  }
+
+  // Switch from hero to gallery view
+  function showGallery() {
+    hero.classList.add('hidden');
+    gallery.classList.remove('hidden');
+  }
+
+  // Switch from gallery to hero view
+  function showHero() {
+    gallery.classList.add('hidden');
+    hero.classList.remove('hidden');
   }
 
   // Render gallery items
@@ -85,6 +111,8 @@
   }
 
   // Event listeners
+  enterGalleryBtn.addEventListener('click', showGallery);
+
   closeBtn.addEventListener('click', closeLightbox);
   prevBtn.addEventListener('click', showPrevious);
   nextBtn.addEventListener('click', showNext);

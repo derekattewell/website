@@ -3,21 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Photography</title>
+  <title>Derek Attewell — Photography</title>
   <link rel="stylesheet" href="css/gallery.css">
 </head>
 <body>
-  <header class="gallery-header">
+  <header class="header">
+    <a href="index.html" class="site-name">Derek Attewell</a>
     <nav>
       <a href="index.html" class="nav-link">Work</a>
       <a href="photography.html" class="nav-link active">Photography</a>
     </nav>
   </header>
 
-  <main class="gallery" id="gallery">
+  <!-- Hero view: first image large on load -->
+  <section class="hero" id="hero">
+    <img src="" alt="" id="hero-img">
+    <button class="hero-enter-gallery" id="enter-gallery">View Gallery</button>
+  </section>
+
+  <!-- Gallery view: all images in grid -->
+  <main class="gallery hidden" id="gallery">
     <!-- Images loaded dynamically from data/images.json -->
   </main>
 
+  <!-- Lightbox for viewing individual images -->
   <div class="lightbox" id="lightbox">
     <button class="lightbox-close" id="lightbox-close" aria-label="Close">&times;</button>
     <button class="lightbox-prev" id="lightbox-prev" aria-label="Previous">&lsaquo;</button>
