@@ -1,3 +1,14 @@
+/* shadcn dark theme tokens */
+:root {
+  --background: 0 0% 3.9%;
+  --foreground: 0 0% 98%;
+  --muted: 0 0% 14.9%;
+  --muted-foreground: 0 0% 63.9%;
+  --border: 0 0% 14.9%;
+  --ring: 0 0% 83.1%;
+  --radius: 0.5rem;
+}
+
 /* Reset and base */
 *, *::before, *::after {
   box-sizing: border-box;
@@ -10,11 +21,13 @@ html {
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-  background-color: #0a0a0a;
-  color: #fff;
+  font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
   min-height: 100vh;
   line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Header */
@@ -24,27 +37,27 @@ body {
   left: 0;
   right: 0;
   z-index: 100;
-  padding: 1.5rem 2rem;
+  padding: 1.25rem 2rem;
 }
 
 .site-header nav {
   display: flex;
-  gap: 2rem;
+  gap: 1.5rem;
   justify-content: flex-end;
 }
 
 .nav-link {
-  color: rgba(255, 255, 255, 0.6);
+  color: hsl(var(--muted-foreground));
   text-decoration: none;
   font-size: 0.875rem;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  transition: color 0.2s ease;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  transition: color 0.15s ease;
 }
 
 .nav-link:hover,
 .nav-link.active {
-  color: #fff;
+  color: hsl(var(--foreground));
 }
 
 /* Coming soon */
@@ -59,17 +72,19 @@ body {
 }
 
 .coming-soon h1 {
-  font-size: 1.75rem;
-  font-weight: 400;
-  letter-spacing: 0.02em;
-  margin-bottom: 1rem;
-  color: #fff;
+  font-size: 1.875rem;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+  margin-bottom: 0.75rem;
+  color: hsl(var(--foreground));
 }
 
 .coming-soon p {
   font-size: 1rem;
-  color: rgba(255, 255, 255, 0.5);
-  max-width: 400px;
+  line-height: 1.625;
+  color: hsl(var(--muted-foreground));
+  max-width: 420px;
 }
 
 @media (min-width: 768px) {
