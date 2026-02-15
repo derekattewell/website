@@ -1,0 +1,50 @@
+---
+interface Props {
+  currentPage: 'work' | 'photography';
+  variant?: 'default' | 'gallery';
+}
+
+const { currentPage, variant = 'default' } = Astro.props;
+---
+
+<header class:list={['site-header', { 'gallery-header': variant === 'gallery' }]}>
+  <nav>
+    <a href="/" class:list={['nav-link', { active: currentPage === 'work' }]}>Work</a>
+    <a href="/photography" class:list={['nav-link', { active: currentPage === 'photography' }]}>Photography</a>
+  </nav>
+</header>
+
+<style>
+  .site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 1.25rem 2rem;
+  }
+
+  .gallery-header {
+    background: linear-gradient(to bottom, hsl(var(--background) / 0.95) 0%, hsl(var(--background) / 0) 100%);
+  }
+
+  nav {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: flex-end;
+  }
+
+  .nav-link {
+    color: hsl(var(--muted-foreground));
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    transition: color 0.15s ease;
+  }
+
+  .nav-link:hover,
+  .nav-link.active {
+    color: hsl(var(--foreground));
+  }
+</style>

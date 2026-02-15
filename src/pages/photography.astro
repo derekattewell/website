@@ -1,29 +1,100 @@
-(function() {
-  'use strict';
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Lightbox from '../components/Lightbox.astro';
+---
 
+<BaseLayout title="Photography" theme="light">
+  <Nav currentPage="photography" variant="gallery" />
+
+  <main class="gallery" id="gallery">
+    <!-- Images loaded dynamically from data/images.json -->
+  </main>
+
+  <Lightbox />
+</BaseLayout>
+
+<style>
+  .gallery {
+    padding: 5rem 1rem 2rem;
+    columns: 1;
+    column-gap: 0.5rem;
+  }
+
+  @media (min-width: 540px) {
+    .gallery {
+      columns: 2;
+    }
+  }
+
+  @media (min-width: 900px) {
+    .gallery {
+      columns: 3;
+      padding: 5rem 2rem 2rem;
+    }
+  }
+
+  @media (min-width: 1400px) {
+    .gallery {
+      columns: 4;
+    }
+  }
+</style>
+
+<style is:global>
+  .gallery-item {
+    break-inside: avoid;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: var(--radius);
+    position: relative;
+  }
+
+  .gallery-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+    opacity: 0;
+  }
+
+  .gallery-item img.loaded {
+    opacity: 1;
+  }
+
+  .gallery-item:hover img {
+    transform: scale(1.02);
+  }
+
+  .gallery-item.loading {
+    background: hsl(var(--muted));
+    min-height: 200px;
+    border-radius: var(--radius);
+  }
+</style>
+
+<script>
   const CLOUDINARY_BASE = 'https://res.cloudinary.com/dtgbrzxs0/image/upload';
 
-  // Cloudinary transformations
   const transforms = {
     thumbnail: 'c_fill,w_600,q_auto,f_auto',
     full: 'q_auto,f_auto'
   };
 
-  let images = [];
+  let images: { id: string; number: number }[] = [];
   let currentIndex = 0;
 
-  // DOM elements
-  const gallery = document.getElementById('gallery');
-  const lightbox = document.getElementById('lightbox');
-  const lightboxImg = document.getElementById('lightbox-img');
-  const closeBtn = document.getElementById('lightbox-close');
-  const prevBtn = document.getElementById('lightbox-prev');
-  const nextBtn = document.getElementById('lightbox-next');
+  const gallery = document.getElementById('gallery')!;
+  const lightbox = document.getElementById('lightbox')!;
+  const lightboxImg = document.getElementById('lightbox-img') as HTMLImageElement;
+  const closeBtn = document.getElementById('lightbox-close')!;
+  const prevBtn = document.getElementById('lightbox-prev')!;
+  const nextBtn = document.getElementById('lightbox-next')!;
 
-  // Load images from JSON
   async function loadImages() {
     try {
-      const response = await fetch('data/images.json');
+      const response = await fetch('/data/images.json');
       const data = await response.json();
       images = data.images;
       renderGallery();
@@ -32,7 +103,6 @@
     }
   }
 
-  // Render gallery items
   function renderGallery() {
     gallery.innerHTML = images.map((image, index) => `
       <div class="gallery-item loading" data-index="${index}">
@@ -45,16 +115,14 @@
       </div>
     `).join('');
 
-    // Add click handlers
     gallery.querySelectorAll('.gallery-item').forEach(item => {
       item.addEventListener('click', () => {
-        openLightbox(parseInt(item.dataset.index));
+        openLightbox(parseInt((item as HTMLElement).dataset.index!));
       });
     });
   }
 
-  // Lightbox functions
-  function openLightbox(index) {
+  function openLightbox(index: number) {
     currentIndex = index;
     updateLightboxImage();
     lightbox.classList.add('active');
@@ -84,7 +152,6 @@
     updateLightboxImage();
   }
 
-  // Event listeners
   closeBtn.addEventListener('click', closeLightbox);
   prevBtn.addEventListener('click', showPrevious);
   nextBtn.addEventListener('click', showNext);
@@ -111,6 +178,5 @@
     }
   });
 
-  // Initialize
   loadImages();
-})();
+</script>
