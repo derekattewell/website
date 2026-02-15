@@ -1,0 +1,51 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+---
+
+<BaseLayout title="Coming Soon" theme="dark">
+  <Nav currentPage="work" />
+
+  <main class="coming-soon">
+    <h1>Site Redevelopment in Progress</h1>
+    <p>Something new is on its way. Check back soon.</p>
+  </main>
+</BaseLayout>
+
+<style>
+  .coming-soon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+    text-align: center;
+  }
+
+  .coming-soon h1 {
+    font-size: 1.875rem;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.2;
+    margin-bottom: 0.75rem;
+    color: hsl(var(--foreground));
+  }
+
+  .coming-soon p {
+    font-size: 1rem;
+    line-height: 1.625;
+    color: hsl(var(--muted-foreground));
+    max-width: 420px;
+  }
+
+  @media (min-width: 768px) {
+    .coming-soon h1 {
+      font-size: 2.25rem;
+    }
+
+    .coming-soon p {
+      font-size: 1.125rem;
+    }
+  }
+</style>
